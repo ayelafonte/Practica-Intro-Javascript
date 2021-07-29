@@ -21,16 +21,35 @@ export default class playoff {
     {
         return {
             nombre: nombreEquipo,
-            goals: 0
+            //goals: 0
         }
     }
 
+    crearTabla () { //Se arma la tabla vacia
+        for (let i = 0; i < 8; i++) {
+            const partido = {
+                grupo: `Q${i + 1}`,
+                local: {},
+                visitante: {},
+                golesLocal: 0,
+                golesVisitante: 0
+            }
+        }
+    }
+
+    crearPartidos () {
+        for (let i = 0; i < 8; i++) {
+            this.partido[i].local = equiposLocales[i]
+            this.partido[i].visitante = equiposVisitantes [i]    
+        }
+    }
+
+
     crearOctavos() {
-        nombre = 'Octavos',
-        equiposLocales = equipo.slice(0,8),
-        equiposVisitantes = equipo.slice(8, 16)
-        crearPartidos
-
-
+        this.nombre = 'Octavos',
+        this.equiposLocales = this.equipos.slice(0,8),
+        this.equiposVisitantes = this.equipos.slice(8, 16),
+        this.crearTabla(),
+        this.crearPartidos()      
     }
 }

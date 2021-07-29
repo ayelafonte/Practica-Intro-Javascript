@@ -16,4 +16,9 @@ for (let i in eurocopa.equipos) {
 
 console.log ('===== OCTAVOS DE FINAL =====')
 
-eurocopa.crearEtapas()
+eurocopa.crearOctavos()
+
+eurocopa.partido.forEach(i => {
+    console.log ('Nombre del partido ${nombre}')
+    
+});    

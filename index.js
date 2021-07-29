@@ -8,17 +8,21 @@ console.log ('==========================================================');
 console.log ('================== COMIENZA LA EUROCOPA ==================')
 console.log ('==========================================================')
 console.log ('\n')
-console.log ('Equipos participantes:')
+console.log ('EQUIPOS PARTICIPANTES:')
+console.log ('\n')
 for (let i in eurocopa.equipos) {
     const equipo = eurocopa.equipos [i];
     console.log(equipo.nombre)
 }
+console.log ('\n')
+
+eurocopa.crearOctavos();
 
 console.log ('===== OCTAVOS DE FINAL =====')
+console.log ('\n')
+for (let i in eurocopa.partidos) {
+    const partido = eurocopa.partidos[i];
+    console.log(`JORNADA ${partido.grupo}`);
+    console.log(partido.local.nombre, 'vs',partido.visitante.nombre)
+}
 
-eurocopa.crearOctavos()
-
-eurocopa.partido.forEach(i => {
-    console.log ('Nombre del partido ${nombre}')
-    
-});    

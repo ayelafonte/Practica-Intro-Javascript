@@ -4,7 +4,8 @@ export default class playoff {
     {
         this.nombre = nombre;
         this.setupEquipos(equipos);
-        this.etapas = []
+        this.etapas = [];
+        this.partidos = []
 
     }
 
@@ -34,22 +35,22 @@ export default class playoff {
                 golesLocal: 0,
                 golesVisitante: 0
             }
+            this.partidos.push(partido)
         }
     }
 
-    crearPartidos () {
+    crearPartidos (locales, visitantes) {
         for (let i = 0; i < 8; i++) {
-            this.partido[i].local = equiposLocales[i]
-            this.partido[i].visitante = equiposVisitantes [i]    
-        }
+            this.partidos[i].local = locales[i]
+            this.partidos[i].visitante = visitantes [i]    
+        }      
     }
-
 
     crearOctavos() {
         this.nombre = 'Octavos',
         this.equiposLocales = this.equipos.slice(0,8),
         this.equiposVisitantes = this.equipos.slice(8, 16),
-        this.crearTabla(),
-        this.crearPartidos()      
+        this.crearTabla()
+        this.crearPartidos(this.equiposLocales, this.equiposVisitantes)      
     }
 }

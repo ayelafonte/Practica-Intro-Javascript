@@ -135,11 +135,6 @@ export default class playoff {
         this.partidosSemis[1].visitante = this.partidosCuartos[3].ganador
     }
 
-    obtenerPerdedores(local, visitante){
-
-
-    }
-
     crearTercerPuesto() {
         let perdedorLocal = {}
         let perdedorVisitante = {}
@@ -167,6 +162,31 @@ export default class playoff {
         this.partidoFinal[0].local = this.partidosSemis[0].ganador
         this.partidoFinal[0].visitante = this.partidosSemis[1].ganador
     }
+
+    printRonda(partidos) {
+        for (let partido of partidos) {
+            const partido = partidos[i];
+            console.log(`(${partido.grupo})`, '  ', partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
+                '==> GANADOR: ', partido.ganador.nombre); 
+        }
+    }
+
+    printTercero() {
+        for (let partido of partidoTercero) {
+            console.log(partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
+                '==> TERCER PUESTO: ', partido.ganador.nombre); 
+        }
+    }
+
+    printFinal() {
+        for (let partido of partidoFinal) {
+            const partido = partidos[i];
+            console.log(partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
+                '==> GANADOR: ', partido.ganador.nombre); 
+        }
+    }
+
+
 
      
 

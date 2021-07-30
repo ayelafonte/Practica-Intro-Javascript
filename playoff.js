@@ -8,6 +8,7 @@ export default class playoff {
         this.partidosOctavos = [];
         this.partidosCuartos = [];
         this.partidosSemis = [];
+        this.partidoTercero = [];
         this.partidoFinal = []
 
     }
@@ -29,20 +30,27 @@ export default class playoff {
         }
     }
 
-    crearTabla (cantidadPartidos) { //Se arma la tabla vacia
-        let letra
+    crearTabla (letra) { //Se arma la tabla vacia definiéndose la cantidad de partidos que se juega según la letra que se le asigna
+        let cantidadPartidos
         let ronda
 
-        if (cantidadPartidos == 8) {
-            letra = `Q`;
+        if (letra == `Q`) { // Se pasa Q para jugar octavos
+            cantidadPartidos = 8;
             ronda = this.partidosOctavos
-        } else if (cantidadPartidos == 4) {
-            letra = `C`
-            ronda = this.partidosCuartos
-        } else {
-            letra = `S`
+        } else if (letra == `C`) { // Se pasa C para jugar cuartos
+            cantidadPartidos = 4;
+            ronda = this.partidosCuartos 
+        } else if (letra == `S`) { // Se pasa S para jugar las semifinales
+            cantidadPartidos = 2;
             ronda = this.partidosSemis
+        } else if (letra == `T`) { // Se pasa T para jugar el tercer puesto
+            cantidadPartidos = 1;
+            ronda = this.partidoTercero
+        } else {
+            cantidadPartidos = 1; // Se pasa F para jugar la final
+            ronda = this.partidoFinal
         }
+    
 
         for (let i = 0; i < cantidadPartidos; i++) {
             const partido = {
@@ -52,7 +60,7 @@ export default class playoff {
                 golesLocal: 0,
                 golesVisitante: 0,
                 ganador: {}
-            }
+            }            
             ronda.push(partido)
         }
     }
@@ -67,7 +75,7 @@ export default class playoff {
     crearOctavos() {
         this.equiposLocales = this.equipos.slice(0,8),
         this.equiposVisitantes = this.equipos.slice(8, 16),
-        this.crearTabla(8)
+        this.crearTabla(`Q`)
         this.crearPartidosOctavos(this.equiposLocales, this.equiposVisitantes)      
     }
 
@@ -95,8 +103,8 @@ export default class playoff {
         }
     }
 
-    crearPartidosCuartos () {
-        // el ganador de c/ jornada 
+    crearCuartos() {
+        this.crearTabla(`C`);
 
         //C1 = Primer partido de Cuartos de Final
         this.partidosCuartos[0].local = this.partidosOctavos[0].ganador 
@@ -112,12 +120,55 @@ export default class playoff {
 
         // C4 = Cuarto partido de Cuartos de Final
         this.partidosCuartos[3].local = this.partidosOctavos[4].ganador 
-        this.partidosCuartos[3].visitante = this.partidosOctavos[3].ganador
-        
+        this.partidosCuartos[3].visitante = this.partidosOctavos[3].ganador   
     }
 
-    crearCuartos() {
-        this.crearTabla(4);
-        this.crearPartidosCuartos () 
+    crearSemis() {
+        this.crearTabla (`S`);
+
+        // S1
+        this.partidosSemis[0].local = this.partidosCuartos[0].ganador
+        this.partidosSemis[0].visitante = this.partidosCuartos[2].ganador
+
+        // S2
+        this.partidosSemis[1].local = this.partidosCuartos[1].ganador
+        this.partidosSemis[1].visitante = this.partidosCuartos[3].ganador
     }
+
+    obtenerPerdedores(local, visitante){
+
+
+    }
+
+    crearTercerPuesto() {
+        let perdedorLocal = {}
+        let perdedorVisitante = {}
+
+        this.crearTabla(`T`);
+        
+        if (this.partidosSemis[0].golesLocal < this.partidosSemis[0].golesVisitante) {
+            perdedorLocal = this.partidosSemis[0].local
+        } else {
+            perdedorLocal = this.partidosSemis[0].visitante
+        }
+        if (this.partidosSemis[1].golesLocal < this.partidosSemis[1].golesVisitante) {
+            perdedorVisitante = this.partidosSemis[1].local
+        } else {
+            perdedorVisitante = this.partidosSemis[1].visitante
+        }
+
+        this.partidoTercero[0].local = perdedorLocal
+        this.partidoTercero[0].visitante = perdedorVisitante
+    }  
+
+    crearFinal () {
+        this.crearTabla(`F`);
+
+        this.partidoFinal[0].local = this.partidosSemis[0].ganador
+        this.partidoFinal[0].visitante = this.partidosSemis[1].ganador
+    }
+
+     
+
 }   
+

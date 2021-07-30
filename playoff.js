@@ -5,7 +5,10 @@ export default class playoff {
         this.nombre = nombre;
         this.setupEquipos(equipos);
         this.etapas = [];
-        this.partidos = []
+        this.partidosOctavos = [];
+        this.partidosCuartos = [];
+        this.partidosSemis = [];
+        this.partidoFinal = []
 
     }
 
@@ -26,31 +29,95 @@ export default class playoff {
         }
     }
 
-    crearTabla () { //Se arma la tabla vacia
-        for (let i = 0; i < 8; i++) {
+    crearTabla (cantidadPartidos) { //Se arma la tabla vacia
+        let letra
+        let ronda
+
+        if (cantidadPartidos == 8) {
+            letra = `Q`;
+            ronda = this.partidosOctavos
+        } else if (cantidadPartidos == 4) {
+            letra = `C`
+            ronda = this.partidosCuartos
+        } else {
+            letra = `S`
+            ronda = this.partidosSemis
+        }
+
+        for (let i = 0; i < cantidadPartidos; i++) {
             const partido = {
-                grupo: `Q${i + 1}`,
+                grupo: `${letra}${i + 1}`,
                 local: {},
                 visitante: {},
                 golesLocal: 0,
-                golesVisitante: 0
+                golesVisitante: 0,
+                ganador: {}
             }
-            this.partidos.push(partido)
+            ronda.push(partido)
         }
     }
 
-    crearPartidos (locales, visitantes) {
+    crearPartidosOctavos (locales, visitantes) {
         for (let i = 0; i < 8; i++) {
-            this.partidos[i].local = locales[i]
-            this.partidos[i].visitante = visitantes [i]    
+            this.partidosOctavos[i].local = locales[i]
+            this.partidosOctavos[i].visitante = visitantes [i]    
         }      
     }
 
     crearOctavos() {
-        this.nombre = 'Octavos',
         this.equiposLocales = this.equipos.slice(0,8),
         this.equiposVisitantes = this.equipos.slice(8, 16),
-        this.crearTabla()
-        this.crearPartidos(this.equiposLocales, this.equiposVisitantes)      
+        this.crearTabla(8)
+        this.crearPartidosOctavos(this.equiposLocales, this.equiposVisitantes)      
     }
-}
+
+    generarGoles() {
+        return Math.floor(Math.random() * 10);
+    }
+
+    play(partido) {
+        partido.golesLocal = this.generarGoles();
+        partido.golesVisitante = this.generarGoles();
+        while (partido.golesLocal === partido.golesVisitante) {
+            partido.golesLocal = this.generarGoles();
+            partido.golesVisitante = this.generarGoles();
+        }
+    }
+
+    jugarRonda(partidos) {
+         for (const partido of partidos) {
+            this.play(partido)
+            if (partido.golesLocal > partido.golesVisitante) {
+                partido.ganador = partido.local
+            } else {
+                partido.ganador = partido.visitante
+            }
+        }
+    }
+
+    crearPartidosCuartos () {
+        // el ganador de c/ jornada 
+
+        //C1 = Primer partido de Cuartos de Final
+        this.partidosCuartos[0].local = this.partidosOctavos[0].ganador 
+        this.partidosCuartos[0].visitante = this.partidosOctavos[7].ganador
+
+        //C2 = Segundo partido de Cuartos de Final
+        this.partidosCuartos[1].local = this.partidosOctavos[2].ganador 
+        this.partidosCuartos[1].visitante = this.partidosOctavos[5].ganador
+
+        // C3 = Tercer partido de Cuartos de Final
+        this.partidosCuartos[2].local = this.partidosOctavos[6].ganador 
+        this.partidosCuartos[2].visitante = this.partidosOctavos[1].ganador
+
+        // C4 = Cuarto partido de Cuartos de Final
+        this.partidosCuartos[3].local = this.partidosOctavos[4].ganador 
+        this.partidosCuartos[3].visitante = this.partidosOctavos[3].ganador
+        
+    }
+
+    crearCuartos() {
+        this.crearTabla(4);
+        this.crearPartidosCuartos () 
+    }
+}   

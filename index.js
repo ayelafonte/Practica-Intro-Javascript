@@ -8,7 +8,7 @@ console.log ('==========================================================');
 console.log ('================== COMIENZA LA EUROCOPA ==================')
 console.log ('==========================================================')
 console.log ('\n')
-console.log ('EQUIPOS PARTICIPANTES:')
+console.log ('===== EQUIPOS PARTICIPANTES:=====')
 console.log ('\n')
 for (let i in eurocopa.equipos) {
     const equipo = eurocopa.equipos [i];
@@ -16,13 +16,34 @@ for (let i in eurocopa.equipos) {
 }
 console.log ('\n')
 
-eurocopa.crearOctavos();
 
 console.log ('===== OCTAVOS DE FINAL =====')
 console.log ('\n')
-for (let i in eurocopa.partidos) {
-    const partido = eurocopa.partidos[i];
-    console.log(`JORNADA ${partido.grupo}`);
-    console.log(partido.local.nombre, 'vs',partido.visitante.nombre)
+
+
+eurocopa.crearOctavos();
+eurocopa.jugarRonda(eurocopa.partidosOctavos);
+
+for (let i in eurocopa.partidosOctavos) {
+    const partido = eurocopa.partidosOctavos[i];
+    console.log(`JORNADA ${partido.grupo}:`, 
+        partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
+        '==> GANADOR: ', partido.ganador.nombre);
+    
 }
+console.log ('\n')
+console.log ('===== CUARTOS DE FINAL =====')
+console.log ('\n')
+
+eurocopa.crearCuartos();
+eurocopa.jugarRonda(eurocopa.partidosCuartos);
+
+for (let i in eurocopa.partidosCuartos) {
+    const partido = eurocopa.partidosCuartos[i];
+    console.log(`JORNADA ${partido.grupo}:`, 
+        partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
+        '==> GANADOR: ', partido.ganador.nombre);
+}
+
+
 

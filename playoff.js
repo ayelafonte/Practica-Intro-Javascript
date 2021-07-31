@@ -4,7 +4,6 @@ export default class playoff {
     {
         this.nombre = nombre;
         this.setupEquipos(equipos);
-        this.etapas = [];
         this.partidosOctavos = [];
         this.partidosCuartos = [];
         this.partidosSemis = [];
@@ -26,7 +25,6 @@ export default class playoff {
     {
         return {
             nombre: nombreEquipo,
-            //goals: 0
         }
     }
 
@@ -165,30 +163,24 @@ export default class playoff {
 
     printRonda(partidos) {
         for (let partido of partidos) {
-            const partido = partidos[i];
             console.log(`(${partido.grupo})`, '  ', partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
                 '==> GANADOR: ', partido.ganador.nombre); 
         }
     }
 
     printTercero() {
-        for (let partido of partidoTercero) {
-            console.log(partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
-                '==> TERCER PUESTO: ', partido.ganador.nombre); 
+        // for (let partido of partidoTercero) {
+            console.log(this.partidoTercero[0].local.nombre, this.partidoTercero[0].golesLocal, 'vs', this.partidoTercero[0].visitante.nombre, this.partidoTercero[0].golesVisitante, 
+                '==> TERCER PUESTO: ', this.partidoTercero[0].ganador.nombre); 
         }
-    }
+    
 
     printFinal() {
-        for (let partido of partidoFinal) {
-            const partido = partidos[i];
-            console.log(partido.local.nombre, partido.golesLocal, 'vs', partido.visitante.nombre, partido.golesVisitante, 
-                '==> GANADOR: ', partido.ganador.nombre); 
+        // for (let partido of partidoFinal) {
+            console.log(this.partidoFinal[0].local.nombre, this.partidoFinal[0].golesLocal, 'vs', this.partidoFinal[0].visitante.nombre, this.partidoFinal[0].golesVisitante, 
+                '==> GANADOR: ', this.partidoFinal[0].ganador.nombre); 
         }
-    }
-
-
-
-     
+    
 
 }   
 

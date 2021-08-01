@@ -59,6 +59,3 @@ eurocopa.printFinal()
 
 console.log ('\n')
 console.log(`********************** ¡¡¡CAMPEÓN DE LA EUROCOPA ${eurocopa.partidoFinal[0].ganador.nombre}!!! ********************`)
-
-
-
